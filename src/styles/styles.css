@@ -10,6 +10,11 @@
     flex-direction: column;
 }
 
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .auth-page {
     display: flex;
     justify-content: center;
@@ -132,4 +137,40 @@
 .form-control input:valid {
     border-bottom-color: var(--md-sys-color-primary);
     outline: none;
+}
+
+.survey-container {
+    padding: 32px;
+}
+
+.survey-container-body {
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
+.survey-qas-container {
+    background: var(--md-sys-color-secondary-container);
+    border-radius: 15px;
+    padding: 8px;
+}
+
+.survey-question {
+    margin-bottom: 12px;
+}
+
+.survey-radio-button-group {
+    margin-bottom: 32px;
+}
+
+.survey-radio-button {
+    margin-bottom: 8px;
+}
+
+.survey-radio-button input {
+    margin-right: 8px;
+    transform: translateY(15%);
+}
+
+.survey-error-span {
+    margin-top: 16px;
 }
