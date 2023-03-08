@@ -13,7 +13,8 @@
 .auth-page {
     display: flex;
     justify-content: center;
-    margin-top: 250px;
+    margin-top: 150px;
+    margin-bottom: 150px;
 }
 
 .auth-card {
@@ -40,6 +41,14 @@
 .login-bottom-text {
     margin-top: 16px;
     margin-bottom: 53px;
+}
+
+.register-bottom-div {
+    margin-bottom: 53px;
+}
+
+.error-span {
+    color: var(--md-sys-color-error);
 }
 
 .auth-button {
