@@ -43,6 +43,17 @@
     margin-bottom: 53px;
 }
 
+.register-date-text {
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    margin-left: 54px;
+}
+
+.register-date-picker {
+    margin-left: 26px;
+}
+
 .register-gender {
     width: 100%;
     margin-left: 43px;
