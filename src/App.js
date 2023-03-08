@@ -1,11 +1,13 @@
 import "./styles/theme.css"
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
 import {LoginPage} from "./pages/auth/login/LoginPage";
+import {RegisterPage} from "./pages/auth/register/RegisterPage";
 
 function App() {
     const router = createBrowserRouter(
         createRoutesFromElements([
             <Route path="/login" element={<LoginPage/>}/>,
+            <Route path="/register" element={<RegisterPage/>}/>,
         ])
     )
     return (
