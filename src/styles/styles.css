@@ -43,6 +43,28 @@
     margin-bottom: 53px;
 }
 
+.register-gender {
+    width: 100%;
+    margin-left: 43px;
+}
+
+.register-gender-text {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: 6px;
+}
+
+.register-radio-group {
+}
+
+.register-radio-group label {
+    margin-right: 8px;
+}
+
+.register-radio-group input {
+    margin-right: 6px;
+}
+
 .register-bottom-div {
     margin-bottom: 53px;
 }

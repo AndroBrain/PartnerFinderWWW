@@ -7,9 +7,14 @@ export function RegisterPage() {
     let [email, setEmail] = useState("")
     let [name, setName] = useState("")
     let [surname, setSurname] = useState("")
+    let [selectedOption, setSelectedOption] = useState("M")
     let [password, setPassword] = useState("")
     let [repeatPassword, setRepeatPassword] = useState("")
     let [error, setError] = useState(null)
+
+    const cmdChangeSelectedOption = (option) => {
+        setSelectedOption(option)
+    }
 
     const cmdRegister = (e) => {
         e.preventDefault()
@@ -25,6 +30,26 @@ export function RegisterPage() {
             <TextField inputType={"text"} label={"Email"} input={email} onInputChange={msg => setEmail(msg)}/>
             <TextField inputType={"text"} label={"Imie"} input={name} onInputChange={msg => setName(msg)}/>
             <TextField inputType={"text"} label={"Nazwisko"} input={surname} onInputChange={msg => setSurname(msg)}/>
+            <div className="register-gender flex-column">
+                <span className="register-gender-text label-medium">Płeć</span>
+                <div className="register-radio-group">
+                    <label className="body-large">
+                        <input type="radio" value="Kobieta" checked={selectedOption === "M"}
+                               onChange={e => cmdChangeSelectedOption("M")}/>
+                        Mężczyzna
+                    </label>
+                    <label className="body-large">
+                        <input type="radio" value="Kobieta" checked={selectedOption === "K"}
+                               onChange={e => cmdChangeSelectedOption("K")}/>
+                        Kobieta
+                    </label>
+                    <label className="body-large">
+                        <input type="radio" value="Kobieta" checked={selectedOption === "I"}
+                               onChange={e => cmdChangeSelectedOption("I")}/>
+                        Inne
+                    </label>
+                </div>
+            </div>
             <TextField inputType={"password"} label={"Hasło"} input={password} onInputChange={msg => setPassword(msg)}/>
             <TextField inputType={"password"} label={"Powtórz hasło"} input={repeatPassword}
                        onInputChange={msg => setRepeatPassword(msg)}/>
