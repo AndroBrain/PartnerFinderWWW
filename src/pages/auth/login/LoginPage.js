@@ -19,7 +19,7 @@ export function LoginPage() {
             <span className="auth-app-name headline-small">{appName}</span>
             <TextField inputType={"text"} label={"Email"} input={email} onInputChange={msg => setEmail(msg)}/>
             <TextField inputType={"password"} label={"Hasło"} input={password} onInputChange={msg => setPassword(msg)}/>
-            <ButtonPrimary text="Zaloguj" className="auth-button"/>
+            <ButtonPrimary text="Zaloguj" className="auth-button" onClick={cmdLogin}/>
             <div className="login-bottom-text">
                 <span className="body-small">Nie masz jeszcze konta? </span>
                 <Link to={"/register"}>Zarejestruj się</Link>
