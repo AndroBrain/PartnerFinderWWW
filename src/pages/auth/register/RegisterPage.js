@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {TextField} from "../../../components/TextField";
-import {ButtonPrimary} from "../../../components/PrimaryButton";
+import {ButtonPrimary} from "../../../components/ButtonPrimary";
 import {appName} from "../../../App";
 import DatePicker from "react-datepicker";
 import { registerLocale, setDefaultLocale } from  "react-datepicker";

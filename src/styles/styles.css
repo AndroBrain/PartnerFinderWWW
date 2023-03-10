@@ -114,6 +114,23 @@
     color: var(--md-sys-color-on-primary);
 }
 
+.button-outlined {
+    border-radius: 15px;
+    border: 1px solid var(--md-sys-color-primary);
+    background: var(--md-sys-color-surface);
+    text-align: center;
+    padding: 0 16px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.button-outlined span {
+    color: var(--md-sys-color-on-surface);
+}
+
 .form-control {
     box-sizing: border-box;
     width: 90%;
@@ -177,6 +194,26 @@
 
 .survey-error-span {
     margin-top: 16px;
+}
+
+.mission-section {
+    margin: 32px;
+    align-items: center;
+}
+
+.mission-text {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.mission-auth-section {
+    margin-top: 32px;
+    align-items: center;
+}
+
+.mission-auth-or-text {
+    margin-left: 16px;
+    margin-right: 16px;
 }
 
 .opinions-section {
