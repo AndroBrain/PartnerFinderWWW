@@ -1,7 +1,7 @@
 import "./../../styles/styles.css"
 import {SurveyQA} from "./SurveyQA";
 import {useState} from "react";
-import {ButtonPrimary} from "../../components/PrimaryButton";
+import {ButtonPrimary} from "../../components/ButtonPrimary";
 
 export function SurveyPage() {
     let [QAs, setQAs] = useState(mockQAs)

@@ -2,7 +2,7 @@ import "./../../../styles/styles.css"
 import {appName} from "../../../App";
 import {TextField} from "../../../components/TextField";
 import {useState} from "react";
-import {ButtonPrimary} from "../../../components/PrimaryButton";
+import {ButtonPrimary} from "../../../components/ButtonPrimary";
 import {Link} from "react-router-dom";
 
 export function LoginPage() {
