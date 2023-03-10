@@ -2,6 +2,7 @@ import {OpinionCard} from "./OpinionCard";
 import {ButtonPrimary} from "../../../components/ButtonPrimary";
 import {ButtonOutlined} from "../../../components/ButtonOutlined";
 import {useNavigate} from "react-router-dom";
+import {ProfileCardShort} from "../../../components/ProfileCardShort";
 
 export function HomePagePreview() {
     const navigate = useNavigate()
@@ -16,6 +17,12 @@ export function HomePagePreview() {
                 <span className="label-medium mission-auth-or-text">lub</span>
                 <ButtonOutlined text="Zaloguj" onClick={() => navigate("/login")}/>
             </div>
+            {
+                profiles.map((profile) =>
+                    <ProfileCardShort name={profile.name}
+                                      imageSrc={profile.imageSrc} bio={profile.bio}/>
+                )
+            }
         </div>
 
         <div className="flex-column flex-1 opinions-section">
@@ -35,4 +42,17 @@ const opinions = [
     {author: "Filip", text: "OK"},
     {author: "Hubert", text: "OK"},
 
+]
+
+const profiles = [
+    {
+        name: "Marian",
+        imageSrc: "drawable/marian.png",
+        bio: "Marian z Poznania to szalony romantyk, który uwielbia spontaniczne wypady, sporty ekstremalne i podróże. Zafascynowany muzyką i sztuką, szuka kogoś do dzielenia życia i przygód."
+    },
+    {
+        name: "Weronika",
+        imageSrc: "drawable/weronika.png",
+        bio: "Marian z Poznania to szalony romantyk, który uwielbia spontaniczne wypady, sporty ekstremalne i podróże. Zafascynowany muzyką i sztuką, szuka kogoś do dzielenia życia i przygód."
+    },
 ]

@@ -209,11 +209,46 @@
 .mission-auth-section {
     margin-top: 32px;
     align-items: center;
+    margin-bottom: 32px;
 }
 
 .mission-auth-or-text {
     margin-left: 16px;
     margin-right: 16px;
+}
+
+.profile-card-short {
+    background: var(--md-sys-color-inverse-on-surface);
+    border-radius: 15px;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 24px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.profile-card-short-img {
+    border-radius: 15px;
+    object-fit: cover;
+    width: 372px;
+}
+
+.profile-card-short-info {
+    flex: 100;
+    align-items: center;
+    margin-left: 16px;
+    margin-right: 16px;
+    text-align: center;
+}
+
+.profile-card-short-name {
+    margin-top: 18px;
+}
+
+.profile-card-short-line {
+    border: 1px solid var(--md-sys-color-on-surface);
+    width: 100%;
+    margin-top: 12px;
+    margin-bottom: 8px;
 }
 
 .opinions-section {
@@ -225,6 +260,7 @@
     border-radius: 15px;
     min-height: 176px;
     margin-bottom: 32px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .opinion-card-author {
