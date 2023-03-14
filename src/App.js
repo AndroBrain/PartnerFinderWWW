@@ -7,12 +7,19 @@ import {HomePage} from "./pages/home/HomePage";
 import {useState} from "react";
 import {authContext} from "./pages/auth/auth";
 
+const JWT_KEY = "jwt"
+
 function App() {
-    const [authState, setAuthState] = useState({jwt: localStorage.getItem("jwt")})
+    const [authState, setAuthState] = useState({jwt: localStorage.getItem(JWT_KEY)})
 
     const login = (jwt) => {
         setAuthState({jwt: jwt})
-        localStorage.setItem("jwt", jwt)
+        localStorage.setItem(JWT_KEY, jwt)
+    }
+
+    const logout = () => {
+        setAuthState({jwt: null})
+        localStorage.removeItem(JWT_KEY)
     }
 
     const router = createBrowserRouter(
@@ -24,7 +31,7 @@ function App() {
         ])
     )
     return (
-        <authContext.Provider value={{authState, login}}>
+        <authContext.Provider value={{authState, login, logout}}>
             <div className="app">
                 <RouterProvider router={router}/>
             </div>
