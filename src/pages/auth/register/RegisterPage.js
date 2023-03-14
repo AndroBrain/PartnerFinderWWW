@@ -69,7 +69,7 @@ export function RegisterPage() {
             <TextField inputType={"password"} label={"Hasło"} input={password} onInputChange={msg => setPassword(msg)}/>
             <TextField inputType={"password"} label={"Powtórz hasło"} input={repeatPassword}
                        onInputChange={msg => setRepeatPassword(msg)}/>
-            {error !== null && <span className="error-span">{error}</span>}
+            {error !== null && <span className="error-span auth-error-span">{error}</span>}
             <ButtonPrimary text="Zarejestruj" className="auth-button" onClick={cmdRegister}/>
             {loading && <span className="label-medium">Ładowanie...</span>}
             <div className="register-bottom-div"></div>

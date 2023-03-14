@@ -4,13 +4,25 @@ import {TextField} from "../../../components/TextField";
 import {useState} from "react";
 import {ButtonPrimary} from "../../../components/ButtonPrimary";
 import {Link} from "react-router-dom";
+import {LoginRequest} from "./LoginRequest";
 
 export function LoginPage() {
+    let [success, setSuccess] = useState(false)
+    let [loading, setLoading] = useState(false)
     let [email, setEmail] = useState("")
     let [password, setPassword] = useState("")
+    let [error, setError] = useState(null)
 
     const cmdLogin = (e) => {
         e.preventDefault()
+        setError(null)
+        if (email.trim().length <= 0) {
+            setError("Wypełnij pole email.")
+        } else if (password.trim().length <= 0) {
+            setError("Wypełnij pole hasło.")
+        } else {
+            LoginRequest(setLoading, setSuccess, setError, email, password)
+        }
     }
 
     return <div className="auth-page">
@@ -19,6 +31,7 @@ export function LoginPage() {
             <span className="auth-app-name headline-small">{appName}</span>
             <TextField inputType={"text"} label={"Email"} input={email} onInputChange={msg => setEmail(msg)}/>
             <TextField inputType={"password"} label={"Hasło"} input={password} onInputChange={msg => setPassword(msg)}/>
+            {error !== null && <span className="error-span auth-error-span">{error}</span>}
             <ButtonPrimary text="Zaloguj" className="auth-button" onClick={cmdLogin}/>
             <div className="login-bottom-text">
                 <span className="body-small">Nie masz jeszcze konta? </span>

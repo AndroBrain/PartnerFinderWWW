@@ -105,6 +105,10 @@
     margin-bottom: 8px;
 }
 
+.auth-error-span {
+    margin-top: 8px;
+}
+
 .toolbar {
     height: 82px;
     background: var(--md-sys-color-surface);
