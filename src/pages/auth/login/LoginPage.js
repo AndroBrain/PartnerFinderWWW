@@ -28,8 +28,7 @@ export function LoginPage() {
         } else if (password.trim().length <= 0) {
             setError("Wypełnij pole hasło.")
         } else {
-            setAsLoggedIn("LOLO")
-            // LoginRequest(setLoading, setAsLoggedIn, setError, email, password)
+            LoginRequest(setLoading, setAsLoggedIn, setError, email, password)
         }
     }
 
