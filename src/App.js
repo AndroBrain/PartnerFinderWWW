@@ -23,4 +23,4 @@ function App() {
 
 export default App;
 export const appName = "Burza Mózgów"
-export const apiUrl = "https://localhost:44321/api"
+export const apiUrl = "http://localhost:8081/api"
