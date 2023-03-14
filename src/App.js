@@ -8,10 +8,11 @@ import {useState} from "react";
 import {authContext} from "./pages/auth/auth";
 
 function App() {
-    const [authState, setAuthState] = useState({jwt: null})
+    const [authState, setAuthState] = useState({jwt: localStorage.getItem("jwt")})
 
     const login = (jwt) => {
         setAuthState({jwt: jwt})
+        localStorage.setItem("jwt", jwt)
     }
 
     const router = createBrowserRouter(
