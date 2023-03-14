@@ -1,17 +1,24 @@
 import "./../../../styles/styles.css"
 import {appName} from "../../../App";
 import {TextField} from "../../../components/TextField";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {ButtonPrimary} from "../../../components/ButtonPrimary";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {LoginRequest} from "./LoginRequest";
+import {authContext} from "../auth";
 
 export function LoginPage() {
-    let [success, setSuccess] = useState(false)
-    let [loading, setLoading] = useState(false)
-    let [email, setEmail] = useState("")
-    let [password, setPassword] = useState("")
-    let [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState(null)
+    const {login} = useContext(authContext)
+    const navigate = useNavigate()
+
+    const setAsLoggedIn = (jwt) => {
+        login(jwt)
+        navigate("/")
+    }
 
     const cmdLogin = (e) => {
         e.preventDefault()
@@ -21,7 +28,8 @@ export function LoginPage() {
         } else if (password.trim().length <= 0) {
             setError("Wypełnij pole hasło.")
         } else {
-            LoginRequest(setLoading, setSuccess, setError, email, password)
+            setAsLoggedIn("LOLO")
+            // LoginRequest(setLoading, setAsLoggedIn, setError, email, password)
         }
     }
 

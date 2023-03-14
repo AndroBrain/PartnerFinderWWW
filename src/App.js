@@ -4,8 +4,16 @@ import {LoginPage} from "./pages/auth/login/LoginPage";
 import {RegisterPage} from "./pages/auth/register/RegisterPage";
 import {SurveyPage} from "./pages/survey/SurveyPage";
 import {HomePage} from "./pages/home/HomePage";
+import {useState} from "react";
+import {authContext} from "./pages/auth/auth";
 
 function App() {
+    const [authState, setAuthState] = useState({jwt: null})
+
+    const login = (jwt) => {
+        setAuthState({jwt: jwt})
+    }
+
     const router = createBrowserRouter(
         createRoutesFromElements([
             <Route path="/" element={<HomePage/>}/>,
@@ -15,9 +23,11 @@ function App() {
         ])
     )
     return (
-        <div className="app">
-            <RouterProvider router={router}/>
-        </div>
+        <authContext.Provider value={{authState, login}}>
+            <div className="app">
+                <RouterProvider router={router}/>
+            </div>
+        </authContext.Provider>
     );
 }
 
