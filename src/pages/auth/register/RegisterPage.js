@@ -2,18 +2,21 @@ import {useState} from "react";
 import {TextField} from "../../../components/TextField";
 import {ButtonPrimary} from "../../../components/ButtonPrimary";
 import {appName} from "../../../App";
-import DatePicker from "react-datepicker";
-import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import DatePicker, {registerLocale} from "react-datepicker";
 import pl from 'date-fns/locale/pl';
 
 import "react-datepicker/dist/react-datepicker.css";
+import {RegisterRequest} from "./RegisterRequest";
+import {Navigate} from "react-router-dom";
 
 export function RegisterPage() {
+    let [loading, setLoading] = useState(false)
+    let [success, setSuccess] = useState(false)
     let [email, setEmail] = useState("")
     let [name, setName] = useState("")
     let [surname, setSurname] = useState("")
     let [selectedGender, setSelectedGender] = useState("M")
-    const [birthdate, setBirthdate] = useState(new Date());
+    const [dateOfBirth, setDateOfBirth] = useState(new Date());
     let [password, setPassword] = useState("")
     let [repeatPassword, setRepeatPassword] = useState("")
     let [error, setError] = useState(null)
@@ -28,6 +31,8 @@ export function RegisterPage() {
         e.preventDefault()
         if (password !== repeatPassword) {
             setError("Błąd. Hasła muszą być identyczne!")
+        } else {
+            RegisterRequest(setLoading, setSuccess, setError, email, name, surname, selectedGender, dateOfBirth, password)
         }
     }
 
@@ -59,13 +64,16 @@ export function RegisterPage() {
                 </div>
             </div>
             <span className="register-date-text label-medium">Data urodzenia</span>
-            <DatePicker locale="pl" className="register-date-picker" selected={birthdate} onChange={(date) => setBirthdate(date)}/>
+            <DatePicker locale="pl" className="register-date-picker" selected={dateOfBirth}
+                        onChange={(date) => setDateOfBirth(date)}/>
             <TextField inputType={"password"} label={"Hasło"} input={password} onInputChange={msg => setPassword(msg)}/>
             <TextField inputType={"password"} label={"Powtórz hasło"} input={repeatPassword}
                        onInputChange={msg => setRepeatPassword(msg)}/>
             {error !== null && <span className="error-span">{error}</span>}
             <ButtonPrimary text="Zarejestruj" className="auth-button" onClick={cmdRegister}/>
+            {loading && <span className="label-medium">Ładowanie...</span>}
             <div className="register-bottom-div"></div>
         </form>
+        {success && <Navigate to="/login"/>}
     </div>
 }
