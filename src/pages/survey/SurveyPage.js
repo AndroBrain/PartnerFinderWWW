@@ -14,21 +14,19 @@ export function SurveyPage() {
     return <div className="flex-column survey-container">
         <span className="headline-large">Test Psychologiczny</span>
         <span className="body-medium survey-container-body">Wypełnienie testu jest wymagane, abyśmy mogli dobrać Partnera.</span>
-        <div className="flex-column survey-qas-container">
-            {
-                QAs.map((QA, index) =>
-                    <SurveyQA key={QA.question} question={QA.question} answers={QA.answers}
-                              selectedAnswer={QA.selectedAnswer}
-                              onAnswerChange={(answer) => setQAs(QAs.map(((qa, qaIndex) => qaIndex === index ? {
-                                  ...qa,
-                                  selectedAnswer: answer
-                              } : qa)))}/>
-                )
-            }
-            {error != null && <span className="label-medium error-span survey-error-span">{error}</span>}
-            <div className="flex-wrap">
-                <ButtonPrimary text={"Prześlij Odpowiedzi"} onClick={cmdSendAnswers}/>
-            </div>
+        {
+            QAs.map((QA, index) =>
+                <SurveyQA key={QA.question} question={QA.question} answers={QA.answers}
+                          selectedAnswer={QA.selectedAnswer}
+                          onAnswerChange={(answer) => setQAs(QAs.map(((qa, qaIndex) => qaIndex === index ? {
+                              ...qa,
+                              selectedAnswer: answer
+                          } : qa)))}/>
+            )
+        }
+        {error != null && <span className="label-medium error-span survey-error-span">{error}</span>}
+        <div className="flex-wrap">
+            <ButtonPrimary text={"Prześlij Odpowiedzi"} onClick={cmdSendAnswers}/>
         </div>
     </div>
 }
