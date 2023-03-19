@@ -4,6 +4,7 @@ import {LoginPage} from "./pages/auth/login/LoginPage";
 import {RegisterPage} from "./pages/auth/register/RegisterPage";
 import {SurveyPage} from "./pages/survey/SurveyPage";
 import {HomePage} from "./pages/home/HomePage";
+import {HomePageLogged} from "./pages/home/logged/HomePageLogged"
 
 function App() {
     const router = createBrowserRouter(
@@ -12,6 +13,7 @@ function App() {
             <Route path="/login" element={<LoginPage/>}/>,
             <Route path="/register" element={<RegisterPage/>}/>,
             <Route path="/survey" element={<SurveyPage/>}/>,
+            <Route path="/main" element={<HomePageLogged/>}/>,
         ])
     )
     return (
