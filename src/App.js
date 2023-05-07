@@ -5,6 +5,7 @@ import {RegisterPage} from "./pages/auth/register/RegisterPage";
 import {SurveyPage} from "./pages/survey/SurveyPage";
 import {HomePage} from "./pages/home/HomePage";
 import {HomePageLogged} from "./pages/home/logged/HomePageLogged"
+import {ChatPage} from "./pages/chat/ChatPage"
 
 function App() {
     const router = createBrowserRouter(
@@ -14,6 +15,7 @@ function App() {
             <Route path="/register" element={<RegisterPage/>}/>,
             <Route path="/survey" element={<SurveyPage/>}/>,
             <Route path="/main" element={<HomePageLogged/>}/>,
+            <Route path="/chat" element={<ChatPage/>}/>,
         ])
     )
     return (
