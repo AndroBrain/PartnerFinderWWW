@@ -7,9 +7,10 @@ import {HomePage} from "./pages/home/HomePage";
 import {useState} from "react";
 import {authContext} from "./pages/auth/auth";
 
-const JWT_KEY = "jwt"
 import {HomePageLogged} from "./pages/home/logged/HomePageLogged"
 import {ChatPage} from "./pages/chat/ChatPage"
+
+const JWT_KEY = "jwt"
 
 function App() {
     const [authState, setAuthState] = useState({jwt: localStorage.getItem(JWT_KEY)})
