@@ -38,7 +38,7 @@ export function HomePageLogged() {
         const newUsers = [...users];
         newUsers.splice(currentIndex, 1);
         setUsers(newUsers);
-        const nextIndex = currentIndex < users.length ? currentIndex : currentIndex - 1;
+        const nextIndex = currentIndex < users.length - 1 ? currentIndex : currentIndex - 1;
         setCurrentIndex(nextIndex);
     }
 
