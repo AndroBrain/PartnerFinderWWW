@@ -4,7 +4,7 @@ export function SurveyQA({question, answers, selectedAnswer, onAnswerChange}) {
     return <div className="flex-column survey-qas-container">
         <span className="headline-large survey-question">{question}</span>
         <div className="flex-row survey-radio-button">
-            <span className="title-medium">Bardzo Ważne</span>
+            <span className="title-medium">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bardzo Ważne</span>
             {answers.map((answer, index) =>
                 <input
                     className={index % 4 === 0 ? "survey-radio-button-large" : index === 1 || index === 3 ? "survey-radio-button-small" : "survey-radio-button-medium"}
