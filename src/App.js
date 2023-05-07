@@ -8,6 +8,8 @@ import {useState} from "react";
 import {authContext} from "./pages/auth/auth";
 
 const JWT_KEY = "jwt"
+import {HomePageLogged} from "./pages/home/logged/HomePageLogged"
+import {ChatPage} from "./pages/chat/ChatPage"
 
 function App() {
     const [authState, setAuthState] = useState({jwt: localStorage.getItem(JWT_KEY)})
@@ -28,6 +30,8 @@ function App() {
             <Route path="/login" element={<LoginPage/>}/>,
             <Route path="/register" element={<RegisterPage/>}/>,
             <Route path="/survey" element={<SurveyPage/>}/>,
+            <Route path="/main" element={<HomePageLogged/>}/>,
+            <Route path="/chat" element={<ChatPage/>}/>,
         ])
     )
     return (
