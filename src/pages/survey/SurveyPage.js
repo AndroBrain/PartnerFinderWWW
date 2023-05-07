@@ -35,31 +35,31 @@ const mockQAs = [
     {
         question: "1. Question",
         answers: [
-            "A", "B", "C"
+            "A", "B", "C", "D", "E",
         ],
     },
     {
         question: "2. Question",
         answers: [
-            "A", "B", "C"
+            "A", "B", "C", "D", "E",
         ],
     },
     {
         question: "3. Question",
         answers: [
-            "A", "B", "C"
+            "A", "B", "C", "D", "E",
         ],
     },
     {
         question: "4. Question",
         answers: [
-            "A", "B", "C"
+            "A", "B", "C", "D", "E",
         ],
     },
     {
         question: "5. Question",
         answers: [
-            "A", "B", "C"
+            "A", "B", "C", "D", "E"
         ],
     },
 ]

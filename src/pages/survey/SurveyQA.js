@@ -1,17 +1,19 @@
 import "./../../styles/styles.css"
 
 export function SurveyQA({question, answers, selectedAnswer, onAnswerChange}) {
-    return <div className="flex-column">
-        <span className="title-large survey-question">{question}</span>
-        <div className="flex-column survey-radio-button">
-            {answers.map(answer =>
-                <label className="label-medium survey-radio-button">
-                    <input type="radio" value={answer} checked={selectedAnswer === answer}
-                           onChange={e => onAnswerChange(answer)}/>
-                    {answer}
-                </label>
+    return <div className="flex-column survey-qas-container">
+        <span className="headline-large survey-question">{question}</span>
+        <div className="flex-row survey-radio-button">
+            <span className="title-medium">Bardzo Ważne</span>
+            {answers.map((answer, index) =>
+                <input
+                    className={index % 4 === 0 ? "survey-radio-button-large" : index === 1 || index === 3 ? "survey-radio-button-small" : "survey-radio-button-medium"}
+                    type="radio" value={answer}
+                    checked={selectedAnswer === answer}
+                    onChange={e => onAnswerChange(answer)}/>
             )
             }
+            <span className="title-medium">Nie obchodzi mnie to</span>
         </div>
     </div>
 }

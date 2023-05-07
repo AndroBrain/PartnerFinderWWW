@@ -207,6 +207,7 @@
     border-radius: 20px;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .survey-container-body {
@@ -215,24 +216,43 @@
 }
 
 .survey-qas-container {
-
+    margin-bottom: 32px;
+    justify-content: center;
+    align-items: center;
 }
 
 .survey-question {
+    margin-top: 8px;
     margin-bottom: 12px;
-}
-
-.survey-radio-button-group {
-    margin-bottom: 32px;
 }
 
 .survey-radio-button {
     margin-bottom: 8px;
+    align-items: center;
 }
 
 .survey-radio-button input {
-    margin-right: 8px;
-    transform: translateY(15%);
+    margin-right: 24px;
+    margin-left: 24px;
+}
+
+.survey-radio-button-large {
+    width: 48px;
+    height: 48px;
+}
+
+.survey-radio-button-small {
+    width: 32px;
+    height: 32px;
+}
+
+.survey-radio-button-medium {
+    width: 24px;
+    height: 24px;
+}
+
+
+.survey-radio-button span {
 }
 
 .survey-error-span {
@@ -367,7 +387,7 @@
 }
 
 .home-card-icon-right {
-    float:right;
+    float: right;
     width: 110px;
     margin-right: 66px;
     margin-top: 55px;
