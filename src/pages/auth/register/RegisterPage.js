@@ -71,7 +71,7 @@ export function RegisterPage() {
                        onInputChange={msg => setRepeatPassword(msg)}/>
             {error !== null && <span className="error-span auth-error-span">{error}</span>}
             <ButtonPrimary text="Zarejestruj" className="auth-button" onClick={cmdRegister}/>
-            {loading && <span className="label-medium">Ładowanie...</span>}
+            {loading && <span className="label-medium">Rejestrowanie...</span>}
             <div className="register-bottom-div"></div>
         </form>
         {success && <Navigate to="/login"/>}

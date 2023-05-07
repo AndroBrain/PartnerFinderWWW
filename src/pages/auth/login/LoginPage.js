@@ -39,6 +39,7 @@ export function LoginPage() {
             <TextField inputType={"text"} label={"Email"} input={email} onInputChange={msg => setEmail(msg)}/>
             <TextField inputType={"password"} label={"Hasło"} input={password} onInputChange={msg => setPassword(msg)}/>
             {error !== null && <span className="error-span auth-error-span">{error}</span>}
+            {loading && <span className="label-medium">Logowanie...</span>}
             <ButtonPrimary text="Zaloguj" className="auth-button" onClick={cmdLogin}/>
             <div className="login-bottom-text">
                 <span className="body-small">Nie masz jeszcze konta? </span>
