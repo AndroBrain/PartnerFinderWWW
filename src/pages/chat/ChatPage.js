@@ -93,7 +93,7 @@ export function ChatPage() {
         <Box style={{height: "100vh", minHeight: "100%"}}>
             <Toolbar>
                 <IconField text={"Strona główna"} icon={"drawable/main_page.svg"} onClick={() => navigate("/main")}/>
-                <IconField text={"Mój profil"} icon={"drawable/profile.svg"} onClick={() => navigate("/register")}/>
+                <IconField text={"Mój profil"} icon={"drawable/profile.svg"} onClick={() => navigate("/profile")}/>
             </Toolbar>
             {chat.length > 0 &&
             <Box sx={{display: "flex", height: "100%", width: "100%", minHeight:"min-content"}}>

@@ -9,6 +9,7 @@ import {authContext} from "./pages/auth/auth";
 
 import {HomePageLogged} from "./pages/home/logged/HomePageLogged"
 import {ChatPage} from "./pages/chat/ChatPage"
+import {ProfilePage} from "./pages/profile/ProfilePage";
 
 const JWT_KEY = "jwt"
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="/survey" element={<SurveyPage/>}/>,
             <Route path="/main" element={<HomePageLogged/>}/>,
             <Route path="/chat" element={<ChatPage/>}/>,
+            <Route path="/profile" element={<ProfilePage/>}/>,
         ])
     )
     return (

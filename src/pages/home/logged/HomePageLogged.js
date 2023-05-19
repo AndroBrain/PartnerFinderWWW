@@ -45,7 +45,7 @@ export function HomePageLogged() {
     return <Box sx={{display: "flex", height: "100%", width: "100%", flexDirection: "column"}}>
         <Toolbar>
             <IconField text={"Wiadomości"} icon={"drawable/send_message.svg"} onClick={() => navigate("/chat")}/>
-            <IconField text={"Mój profil"} icon={"drawable/profile.svg"}/>
+            <IconField text={"Mój profil"} icon={"drawable/profile.svg"} onClick={() => navigate("/profile")}/>
         </Toolbar>
         {users.length > 0 &&
             <Box sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
