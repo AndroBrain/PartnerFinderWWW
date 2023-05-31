@@ -13,7 +13,7 @@ export function ProfilePage() {
     const {authState} = useContext(authContext)
 
     useEffect(() => {
-        GetProfileInfoRequest(authState.jwt, 2, setProfile, setError)
+        GetProfileInfoRequest(authState.jwt, setProfile, setError)
     }, [])
 
     console.log(authState.jwt)

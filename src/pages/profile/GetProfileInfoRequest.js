@@ -1,7 +1,7 @@
 import {apiUrl} from "../../App";
 
-export let GetProfileInfoRequest = (jwt, id, setProfile, setError) => {
-    fetch(`${apiUrl}/user/info?userId=${id}`,
+export let GetProfileInfoRequest = (jwt, setProfile, setError) => {
+    fetch(`${apiUrl}/user/info`,
         {
             "mode": "cors",
             "method": "GET",
