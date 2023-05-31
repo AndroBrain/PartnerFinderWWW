@@ -6,17 +6,45 @@ import {useContext, useEffect, useState} from "react";
 import {GetProfileInfoRequest} from "./GetProfileInfoRequest";
 import {authContext} from "../auth/auth";
 import {GetProfileDescriptionRequest} from "./GetProfileDescripctionRequest";
+import {ButtonPrimary} from "../../components/ButtonPrimary";
+import {TextField} from "../../components/TextField";
+import {SetProfileDescriptionRequest} from "./SetProfileDescriptionRequest";
 
 export function ProfilePage() {
     const navigate = useNavigate()
     const [profile, setProfile] = useState({})
+    const [editDescription, setEditDescription] = useState("")
     const [description, setDescription] = useState("")
+    const [isInEditMode, setIsInEditMode] = useState(false)
     const [error, setError] = useState(null)
     const {authState} = useContext(authContext)
 
+    const cmdSetDescription = (description) => {
+        setDescription(description)
+        setEditDescription(description)
+    }
+
+    const cmdEdit = (e) => {
+        e.preventDefault()
+        setIsInEditMode(true)
+    }
+
+    const cmdSave = (e) => {
+        e.preventDefault()
+        SetProfileDescriptionRequest(
+            authState.jwt,
+            editDescription,
+            () => {
+                setDescription(editDescription)
+                setIsInEditMode(false)
+            },
+            setError,
+        )
+    }
+
     useEffect(() => {
         GetProfileInfoRequest(authState.jwt, setProfile, setError)
-        GetProfileDescriptionRequest(authState.jwt, setDescription, setError)
+        GetProfileDescriptionRequest(authState.jwt, cmdSetDescription, setError)
     }, [])
 
     console.log("description", description)
@@ -51,12 +79,23 @@ export function ProfilePage() {
                         flexDirection: "column",
                         textAlign: "center",
                         margin: "1rem",
-                        width: "100%"
+                        width: "100%",
+                        alignItems: "center",
                     }}>
                         <Typography variant={"h4"} sx={{
                             padding: "0.5rem"
                         }}>{profile.firstName}, {yearDiff(new Date(profile.dateOfBirth), new Date())}</Typography>
-                        <Typography variant="h5" sx={{padding: "0.5rem"}}>{description}</Typography>
+                        {!isInEditMode && <Typography variant="h5" sx={{padding: "0.5rem"}}>{description}</Typography>}
+                        {isInEditMode && <TextField inputType={"text"} input={editDescription}
+                                                    onInputChange={msg => setEditDescription(msg)}/>}
+                        <Box sx={{
+                            textAlign: "center",
+                            margin: "1rem",
+                            width: "min-content",
+                        }}>
+                            {!isInEditMode && <ButtonPrimary text={"Edytuj"} onClick={cmdEdit}/>}
+                            {isInEditMode && <ButtonPrimary text={"Zapisz"} onClick={cmdSave}/>}
+                        </Box>
                     </Box>
                 </Box>
             </Card>
