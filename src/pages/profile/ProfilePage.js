@@ -5,19 +5,21 @@ import {Toolbar} from "../../components/Toolbar";
 import {useContext, useEffect, useState} from "react";
 import {GetProfileInfoRequest} from "./GetProfileInfoRequest";
 import {authContext} from "../auth/auth";
+import {GetProfileDescriptionRequest} from "./GetProfileDescripctionRequest";
 
 export function ProfilePage() {
     const navigate = useNavigate()
     const [profile, setProfile] = useState({})
+    const [description, setDescription] = useState("")
     const [error, setError] = useState(null)
     const {authState} = useContext(authContext)
 
     useEffect(() => {
         GetProfileInfoRequest(authState.jwt, setProfile, setError)
+        GetProfileDescriptionRequest(authState.jwt, setDescription, setError)
     }, [])
 
-    console.log(authState.jwt)
-    console.log("profile", profile)
+    console.log("description", description)
     return <Box sx={{display: "flex", height: "100%", width: "100%", flexDirection: "column"}}>
         <Toolbar>
             <IconField text={"Wiadomości"} icon={"drawable/send_message.svg"} onClick={() => navigate("/chat")}/>
@@ -44,13 +46,17 @@ export function ProfilePage() {
                     alignItems: "center",
                     minWidth: "min-content"
                 }}>
-                    <Box sx={{display: "flex", flexDirection: "column", textAlign: "center", margin: "1rem"}}>
-                        <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center", margin: "1rem"}}>
-                            <Typography variant={"h4"} sx={{
-                                padding: "0.5rem"
-                            }}>{profile.firstName}, {yearDiff(new Date(profile.dateOfBirth), new Date())}</Typography>
-                        </Box>
-                        <Typography variant="h5" sx={{padding: "0.5rem"}}>{userData.description}</Typography>
+                    <Box sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        textAlign: "center",
+                        margin: "1rem",
+                        width: "100%"
+                    }}>
+                        <Typography variant={"h4"} sx={{
+                            padding: "0.5rem"
+                        }}>{profile.firstName}, {yearDiff(new Date(profile.dateOfBirth), new Date())}</Typography>
+                        <Typography variant="h5" sx={{padding: "0.5rem"}}>{description}</Typography>
                     </Box>
                 </Box>
             </Card>
