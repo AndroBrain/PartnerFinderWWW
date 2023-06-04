@@ -9,6 +9,7 @@ import {GetProfileDescriptionRequest} from "./GetProfileDescripctionRequest";
 import {ButtonPrimary} from "../../components/ButtonPrimary";
 import {TextField} from "../../components/TextField";
 import {SetProfileDescriptionRequest} from "./SetProfileDescriptionRequest";
+import {ButtonOutlined} from "../../components/ButtonOutlined";
 
 export function ProfilePage() {
     const navigate = useNavigate()
@@ -85,7 +86,8 @@ export function ProfilePage() {
                         <Typography variant={"h4"} sx={{
                             padding: "0.5rem"
                         }}>{profile.firstName}, {yearDiff(new Date(profile.dateOfBirth), new Date())}</Typography>
-                        {!isInEditMode && <Typography variant="h5" sx={{padding: "0.5rem"}}>{description}</Typography>}
+                        {!isInEditMode && <Typography variant="h5"
+                                                      sx={{padding: "0.5rem"}}>{description ? description : "Dodaj swój krótki opis!"}</Typography>}
                         {isInEditMode && <TextField inputType={"text"} input={editDescription}
                                                     onInputChange={msg => setEditDescription(msg)}/>}
                         <Box sx={{
@@ -94,7 +96,12 @@ export function ProfilePage() {
                             width: "min-content",
                         }}>
                             {!isInEditMode && <ButtonPrimary text={"Edytuj"} onClick={cmdEdit}/>}
-                            {isInEditMode && <ButtonPrimary text={"Zapisz"} onClick={cmdSave}/>}
+                            {isInEditMode && <div className="flex-row">
+                                <ButtonOutlined text={"Anuluj"} onClick={e => setIsInEditMode(false)}
+                                                className={"profile-card-cancel-button"}/>
+                                <ButtonPrimary text={"Zapisz"} onClick={cmdSave}/>
+                            </div>
+                            }
                         </Box>
                     </Box>
                 </Box>

@@ -289,6 +289,10 @@
     margin-right: 16px;
 }
 
+.profile-card-cancel-button {
+    margin-right: 8px;
+}
+
 .profile-card-short {
     background: var(--md-sys-color-inverse-on-surface);
     border-radius: 15px;
