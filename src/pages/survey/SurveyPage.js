@@ -4,9 +4,12 @@ import {useContext, useEffect, useState} from "react";
 import {ButtonPrimary} from "../../components/ButtonPrimary";
 import {authContext} from "../auth/auth";
 import {GetSurveyQuestionsRequest} from "./GetSurveyQuestionsRequest";
+import {PostSurveyRequest} from "./PostSurveyRequest";
+import {Navigate} from "react-router-dom";
 
 export function SurveyPage() {
     let [QAs, setQAs] = useState([])
+    let [success, setSuccess] = useState(false)
     let [error, setError] = useState(null)
     const {authState} = useContext(authContext)
 
@@ -16,9 +19,20 @@ export function SurveyPage() {
 
     const cmdSendAnswers = (e) => {
         e.preventDefault()
+        PostSurveyRequest(authState.jwt, {
+                answers: QAs.map(obj => ({
+                    questionNumber: obj.questionNumber,
+                    answer: obj.selectedAnswer
+                }))
+            },
+            () => {
+                setSuccess(true)
+            },
+            setError)
     }
 
     return <div className="flex-column survey-container">
+        {success && <Navigate to={"/profile"}/>}
         <span className="headline-large">Test Psychologiczny</span>
         <span className="body-medium survey-container-body">Wypełnienie testu jest wymagane, abyśmy mogli dobrać Partnera.</span>
         {
