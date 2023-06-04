@@ -1,6 +1,6 @@
 import {apiUrl} from "../../../App";
 
-export let RegisterRequest = (setIsLoading, setSuccess, setError, email, name, surname, gender, dateOfBirth, password) => {
+export let RegisterRequest = (setIsLoading, setSuccess, setError, email, name, surname, gender, sexuality, dateOfBirth, password) => {
     fetch(`${apiUrl}/auth/register`,
         {
             "mode": "cors",
