@@ -1,11 +1,18 @@
 import "./../../styles/styles.css"
 import {SurveyQA} from "./SurveyQA";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {ButtonPrimary} from "../../components/ButtonPrimary";
+import {authContext} from "../auth/auth";
+import {GetSurveyQuestionsRequest} from "./GetSurveyQuestionsRequest";
 
 export function SurveyPage() {
-    let [QAs, setQAs] = useState(mockQAs)
+    let [QAs, setQAs] = useState([])
     let [error, setError] = useState(null)
+    const {authState} = useContext(authContext)
+
+    useEffect(() => {
+        GetSurveyQuestionsRequest(authState.jwt, setQAs, setError)
+    }, [])
 
     const cmdSendAnswers = (e) => {
         e.preventDefault()
@@ -16,7 +23,7 @@ export function SurveyPage() {
         <span className="body-medium survey-container-body">Wypełnienie testu jest wymagane, abyśmy mogli dobrać Partnera.</span>
         {
             QAs.map((QA, index) =>
-                <SurveyQA key={QA.question} question={QA.question} answers={QA.answers}
+                <SurveyQA key={QA.questionNumber} question={QA.questionText} answers={[1, 2, 3, 4, 5]}
                           selectedAnswer={QA.selectedAnswer}
                           onAnswerChange={(answer) => setQAs(QAs.map(((qa, qaIndex) => qaIndex === index ? {
                               ...qa,
@@ -30,36 +37,3 @@ export function SurveyPage() {
         </div>
     </div>
 }
-
-const mockQAs = [
-    {
-        question: "1. Question",
-        answers: [
-            "A", "B", "C", "D", "E",
-        ],
-    },
-    {
-        question: "2. Question",
-        answers: [
-            "A", "B", "C", "D", "E",
-        ],
-    },
-    {
-        question: "3. Question",
-        answers: [
-            "A", "B", "C", "D", "E",
-        ],
-    },
-    {
-        question: "4. Question",
-        answers: [
-            "A", "B", "C", "D", "E",
-        ],
-    },
-    {
-        question: "5. Question",
-        answers: [
-            "A", "B", "C", "D", "E"
-        ],
-    },
-]
