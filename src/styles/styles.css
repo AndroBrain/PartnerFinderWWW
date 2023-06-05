@@ -422,3 +422,8 @@
     padding-right: 237px;
     text-align-all: center;
 }
+
+.center-cropped {
+    background-position: center center;
+    background-repeat: no-repeat;
+}

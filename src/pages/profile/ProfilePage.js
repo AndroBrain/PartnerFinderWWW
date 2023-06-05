@@ -2,7 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {Box, Card, CardMedia, Typography} from "@mui/material";
 import {IconField} from "../../components/IconField";
 import {Toolbar} from "../../components/Toolbar";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {GetProfileInfoRequest} from "./GetProfileInfoRequest";
 import {authContext} from "../auth/auth";
 import {GetProfileDescriptionRequest} from "./GetProfileDescripctionRequest";
@@ -11,7 +11,10 @@ import {TextField} from "../../components/TextField";
 import {SetProfileDescriptionRequest} from "./SetProfileDescriptionRequest";
 import {ButtonOutlined} from "../../components/ButtonOutlined";
 
+import {SetProfileImageRequest} from "./SetProfileImageRequest";
+
 export function ProfilePage() {
+    const inputFile = useRef(null)
     const navigate = useNavigate()
     const [profile, setProfile] = useState({})
     const [editDescription, setEditDescription] = useState("")
@@ -19,6 +22,16 @@ export function ProfilePage() {
     const [isInEditMode, setIsInEditMode] = useState(false)
     const [error, setError] = useState(null)
     const {authState} = useContext(authContext)
+
+    const [image, setImage] = useState(null)
+
+    const onImageChange = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            SetProfileImageRequest(authState.jwt, event.target.files[0], () => {
+                setImage(URL.createObjectURL(event.target.files[0]));
+            }, setError)
+        }
+    }
 
     const cmdSetDescription = (description) => {
         setDescription(description)
@@ -48,7 +61,6 @@ export function ProfilePage() {
         GetProfileDescriptionRequest(authState.jwt, cmdSetDescription, setError)
     }, [])
 
-    console.log("description", description)
     return <Box sx={{display: "flex", height: "100%", width: "100%", flexDirection: "column"}}>
         <Toolbar>
             <IconField text={"Wiadomości"} icon={"drawable/send_message.svg"} onClick={() => navigate("/chat")}/>
@@ -62,13 +74,25 @@ export function ProfilePage() {
                 minWidth: "min-content"
             }}>
                 {error !== null && <span className="error-span auth-error-span">{error}</span>}
-                <CardMedia
-                    component="img"
-                    height="500"
-                    image={userData.picture}
-                    alt="user picture"
-                    sx={{objectPosition: "top"}}
-                />
+                <input type='file' accept="image/*" id='file' onChange={onImageChange} ref={inputFile}
+                       style={{display: 'none'}}/>
+                {image === null ?
+                    <Typography variant={"h4"} sx={{
+                        padding: "0.5rem",
+                        height: "500px",
+                        textAlign: "center",
+                        cursor: "pointer",
+                    }}
+                                onClick={(e) => inputFile.current.click()}
+                    >Dodaj swoje zdjęcie</Typography> :
+                    <CardMedia
+                        component="img"
+                        height="500"
+                        image={image}
+                        sx={{objectPosition: "top", cursor: "pointer"}}
+                        onClick={(e) => inputFile.current.click()}
+                    />
+                }
                 <Box sx={{
                     display: "flex",
                     justifyContent: "space-between",
