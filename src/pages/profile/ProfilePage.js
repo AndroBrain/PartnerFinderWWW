@@ -135,12 +135,7 @@ export function ProfilePage() {
 }
 
 function yearDiff(dt1, dt2) {
-    var diffYear = (dt2.getTime() - dt1.getTime()) / 1000;
+    let diffYear = (dt2.getTime() - dt1.getTime()) / 1000;
     diffYear /= (60 * 60 * 24);
     return Math.abs(Math.round(diffYear / 365.25));
-}
-
-const userData = {
-    picture: "drawable/martyna.png",
-    description: "hejka! Nazywam się Martyna i jestem tutaj, aby poznać nowych ludzi. Zawsze lubię spędzać czas na świeżym powietrzu, biegać lub po prostu spacerować. Lubię też czytać dobre książki i gotować smaczne jedzenie. Szukam kogoś, kto jest szczery, inteligentny i z poczuciem humoru. Jeśli chcesz dowiedzieć się więcej, odezwij się do mnie!"
 }
