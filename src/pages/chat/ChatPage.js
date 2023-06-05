@@ -86,8 +86,6 @@ export function ChatPage() {
             }
             return newChats;
         });
-
-        messageRef.current.value = '';
     }
     return (
         <Box style={{height: "100vh", minHeight: "100%"}}>
