@@ -15,7 +15,8 @@ export function RegisterPage() {
     let [email, setEmail] = useState("")
     let [name, setName] = useState("")
     let [surname, setSurname] = useState("")
-    let [selectedGender, setSelectedGender] = useState("M")
+    let [gender, setGender] = useState("male")
+    let [sexuality, setSexuality] = useState("heterosexual")
     const [dateOfBirth, setDateOfBirth] = useState(new Date());
     let [password, setPassword] = useState("")
     let [repeatPassword, setRepeatPassword] = useState("")
@@ -23,8 +24,12 @@ export function RegisterPage() {
 
     registerLocale('pl', pl)
 
-    const cmdChangeSelectedOption = (option) => {
-        setSelectedGender(option)
+    const cmdChangeSelectedGender = (option) => {
+        setGender(option)
+    }
+
+    const cmdChangeSelectedSexuality = (option) => {
+        setSexuality(option)
     }
 
     const cmdRegister = (e) => {
@@ -32,7 +37,7 @@ export function RegisterPage() {
         if (password !== repeatPassword) {
             setError("Błąd. Hasła muszą być identyczne!")
         } else {
-            RegisterRequest(setLoading, setSuccess, setError, email, name, surname, selectedGender, dateOfBirth, password)
+            RegisterRequest(setLoading, setSuccess, setError, email, name, surname, gender, sexuality, dateOfBirth, password)
         }
     }
 
@@ -47,19 +52,34 @@ export function RegisterPage() {
                 <span className="register-gender-text label-medium">Płeć</span>
                 <div className="register-radio-group">
                     <label className="body-large">
-                        <input type="radio" value="Kobieta" checked={selectedGender === "M"}
-                               onChange={e => cmdChangeSelectedOption("M")}/>
+                        <input type="radio" value="Kobieta" checked={gender === "male"}
+                               onChange={e => cmdChangeSelectedGender("male")}/>
                         Mężczyzna
                     </label>
                     <label className="body-large">
-                        <input type="radio" value="Kobieta" checked={selectedGender === "K"}
-                               onChange={e => cmdChangeSelectedOption("K")}/>
+                        <input type="radio" value="Kobieta" checked={gender === "female"}
+                               onChange={e => cmdChangeSelectedGender("female")}/>
                         Kobieta
                     </label>
+                </div>
+            </div>
+            <div className="register-gender flex-column">
+                <span className="register-gender-text label-medium">Orientacja</span>
+                <div className="register-radio-group">
                     <label className="body-large">
-                        <input type="radio" value="Kobieta" checked={selectedGender === "I"}
-                               onChange={e => cmdChangeSelectedOption("I")}/>
-                        Inne
+                        <input type="radio" value="Heteroseksualność" checked={sexuality === "heterosexual"}
+                               onChange={e => cmdChangeSelectedSexuality("heterosexual")}/>
+                        Heteroseksualność
+                    </label>
+                    <label className="body-large">
+                        <input type="radio" value="Homoseksualność" checked={sexuality === "homosexual"}
+                               onChange={e => cmdChangeSelectedSexuality("homosexual")}/>
+                        Homoseksualność
+                    </label>
+                    <label className="body-large">
+                        <input type="radio" value="Biseksualność" checked={sexuality === "bisexual"}
+                               onChange={e => cmdChangeSelectedSexuality("bisexual")}/>
+                        Biseksualność
                     </label>
                 </div>
             </div>

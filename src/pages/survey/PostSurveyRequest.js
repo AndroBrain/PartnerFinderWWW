@@ -1,31 +1,26 @@
-import {apiUrl} from "../../../App";
+import {apiUrl} from "../../App";
 
-export let RegisterRequest = (setIsLoading, setSuccess, setError, email, name, surname, gender, sexuality, dateOfBirth, password) => {
-    fetch(`${apiUrl}/auth/register`,
+export let PostSurveyRequest = (jwt, answers, onSuccess, setError) => {
+    console.log(JSON.stringify(
+        answers
+    ))
+    fetch(`${apiUrl}/questions/answer`,
         {
             "mode": "cors",
             "method": "POST",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
             },
-            "body": JSON.stringify(
-                {
-                    email: email,
-                    firstName: name,
-                    secondName: surname,
-                    gender: gender,
-                    dateOfBirth: dateOfBirth,
-                    password: password,
-                }
+            body: JSON.stringify(
+                answers
             )
-
         }
     )
         .then(response => {
-            setIsLoading(false)
             if (response.status === 200) {
-                setSuccess(true)
+                onSuccess()
             } else {
                 try {
                     response.json().then(json => {

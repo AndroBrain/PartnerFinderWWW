@@ -227,7 +227,8 @@
 
 .survey-question {
     margin-top: 8px;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
+    text-align: center;
 }
 
 .survey-radio-button {
@@ -286,6 +287,10 @@
 .mission-auth-or-text {
     margin-left: 16px;
     margin-right: 16px;
+}
+
+.profile-card-cancel-button {
+    margin-right: 8px;
 }
 
 .profile-card-short {
