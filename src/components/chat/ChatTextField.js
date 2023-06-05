@@ -21,8 +21,9 @@ const ChatTextField = (props) => {
             },
         },
     });
+
     return <form onSubmit={handleSubmit}>
-        <CssTextField name="message" inputRef={messageRef} variant="outlined" sx={{width:"100%", borderColor:"var(--md-sys-color-primary-container-light)", margin:"1rem"}}/>
+        <CssTextField autoFocus name="message" inputRef={messageRef} variant="outlined" sx={{width:"100%", borderColor:"var(--md-sys-color-primary-container-light)", margin:"1rem"}}/>
     </form>;
 }
 export default ChatTextField;

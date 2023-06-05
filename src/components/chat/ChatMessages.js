@@ -1,11 +1,18 @@
 import {Box, Card, Typography} from "@mui/material";
+import {useEffect, useRef} from "react";
 
 const ChatMessages = (props) => {
     const {messages} = props;
-    return <Box sx={{width: "100%", minHeight: "min-content", display:"flex", flexDirection: "column", overflow: "auto", height:"500px"}}>
+    const containerRef = useRef(null);
+    useEffect(() => {
+        containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }, [messages]);
+
+    return <Box sx={{width: "100%", minHeight: "min-content", display:"flex", flexDirection: "column", overflow: "auto", height:"500px"}} ref={containerRef}>
         {messages.map(message => (
             <Box sx={{width:"100%"}}>
                 <Card sx={{
+                    wordWrap: "break-word",
                     float: message.fromUser ? "right" : "left",
                     backgroundColor: message.fromUser ? "var(--md-sys-color-tertiary-container-light)" : "var(--md-sys-color-inverse-primary-light)",
                     margin: "0.5rem",
