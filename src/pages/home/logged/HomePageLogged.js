@@ -86,7 +86,7 @@ export function HomePageLogged() {
                     <CardMedia
                         component="img"
                         height="500"
-                        image={picture}
+                        image={picture.src}
                         alt="user picture"
                         sx={{objectPosition: "top"}}
                     />
