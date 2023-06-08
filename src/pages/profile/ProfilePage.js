@@ -77,14 +77,25 @@ export function ProfilePage() {
                 <input type='file' accept="image/*" id='file' onChange={onImageChange} ref={inputFile}
                        style={{display: 'none'}}/>
                 {image === null ?
+
+                    <Box sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        textAlign: "center",
+                        width: "100%",
+                        height: "500px",
+                        alignItems: "center",
+                        marginTop: "1rem",
+                    }}>
+                <img src={"drawable/sad.svg"} width="250px"></img>
                     <Typography variant={"h4"} sx={{
                         padding: "0.5rem",
-                        height: "500px",
                         textAlign: "center",
-                        cursor: "pointer",
-                    }}
-                                onClick={(e) => inputFile.current.click()}
-                    >Dodaj swoje zdjęcie</Typography> :
+                        marginTop: "1rem",
+                        marginBottom: "1rem",
+                    }}>Brak zdjęcia profilowego</Typography>
+                                <ButtonPrimary text={"Dodaj zdjęcie"} onClick={(e) => inputFile.current.click()}/>
+                    </Box> :
                     <CardMedia
                         component="img"
                         height="500"
