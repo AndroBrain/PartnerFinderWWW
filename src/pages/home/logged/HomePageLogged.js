@@ -2,57 +2,79 @@ import {Toolbar} from "../../../components/Toolbar";
 import {IconField} from "../../../components/IconField";
 import {useNavigate} from "react-router-dom";
 import {Box, Card, CardMedia, IconButton, Typography} from "@mui/material";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {authContext} from "../../auth/auth";
+import {
+    GetCurrentUserId,
+    GetProfileSuggestionsIds,
+    GetUserDescription,
+    GetUserInfo
+} from "./ProfileSuggestionRequests";
+import {decodeBase64Image, GetPictureForUserId} from "./PictureRequests";
 
-const usersData = [
-    {
-        name: "Martyna",
-        picture: "drawable/martyna.png",
-        age: "21",
-        match: "80",
-        description: "hejka! Nazywam się Martyna i jestem tutaj, aby poznać nowych ludzi. Zawsze lubię spędzać czas na świeżym powietrzu, biegać lub po prostu spacerować. Lubię też czytać dobre książki i gotować smaczne jedzenie. Szukam kogoś, kto jest szczery, inteligentny i z poczuciem humoru. Jeśli chcesz dowiedzieć się więcej, odezwij się do mnie!"
-    },
-    {
-        name: "Basia",
-        picture: "drawable/marta.jpg",
-        age: "28",
-        match: "70",
-        description: "Cześć! Nazywam się Basia i jestem tutaj, aby poznać nowych ludzi. Zawsze lubię spędzać czas na świeżym powietrzu, biegać lub po prostu spacerować. Lubię też czytać dobre książki i gotować smaczne jedzenie. Szukam kogoś, kto jest szczery, inteligentny i z poczuciem humoru. Jeśli chcesz dowiedzieć się więcej, odezwij się do mnie!"
-    },
-    {
-        name: "Kasia",
-        picture: "drawable/basia.jpg",
-        age: "24",
-        match: "10",
-        description: "Hejka! Nazywam się Kasia i jestem tutaj, aby poznać nowych ludzi. Zawsze lubię spędzać czas na świeżym powietrzu, biegać lub po prostu spacerować. Lubię też czytać dobre książki i gotować smaczne jedzenie. Szukam kogoś, kto jest szczery, inteligentny i z poczuciem humoru. Jeśli chcesz dowiedzieć się więcej, odezwij się do mnie!"
+function calculateAge(dateString) {
+    const birthday = new Date(dateString);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthday.getFullYear();
+    const monthDiff = today.getMonth() - birthday.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthday.getDate())) {
+        age--;
     }
-]
 
+    return age;
+}
 export function HomePageLogged() {
     const navigate = useNavigate()
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [users, setUsers] = useState(usersData);
+    const {authState} = useContext(authContext)
 
-    const userData = users[currentIndex];
-    const handleReject = () => {
-        const newUsers = [...users];
-        newUsers.splice(currentIndex, 1);
-        setUsers(newUsers);
-        const nextIndex = currentIndex < users.length - 1 ? currentIndex : currentIndex - 1;
-        setCurrentIndex(nextIndex);
-    }
+    const [profiles, setProfiles] = useState([])
+    const [error, setError] = useState(false);
+    const [match, setMatch] = useState("");
+    const [description, setDescription] = useState("");
+    const [picture, setPicture] = useState("drawable/profile2.svg");
+    const [userInfo, setUserInfo] = useState({
+        firstName: "",
+        dateOfBirth: "",
+    });
+
+    useEffect( () => {
+        const fetchData = async () => {
+            try {
+                const currentUserId = await GetCurrentUserId(authState.jwt);
+                GetProfileSuggestionsIds(authState.jwt, setProfiles, setError, currentUserId);
+            } catch (error) {
+                setError(error.toString());
+            }
+        };
+        fetchData();
+    }, [])
+
+    useEffect(() => {
+        if (profiles && profiles.length > 0) {
+
+            setMatch( Math.round(profiles[currentIndex].score * 100));
+            GetUserDescription(authState.jwt, setDescription, setError, profiles[currentIndex].target_user_id)
+            GetPictureForUserId(authState.jwt, setPicture, setError, profiles[currentIndex].target_user_id)
+            GetUserInfo(authState.jwt, setUserInfo, setError, profiles[currentIndex].target_user_id)
+        }
+    }, [currentIndex, profiles]);
+
 
     return <Box sx={{display: "flex", height: "100%", width: "100%", flexDirection: "column"}}>
         <Toolbar>
             <IconField text={"Wiadomości"} icon={"drawable/send_message.svg"} onClick={() => navigate("/chat")}/>
             <IconField text={"Mój profil"} icon={"drawable/profile.svg"} onClick={() => navigate("/profile")}/>
         </Toolbar>
-        {users.length > 0 &&
+        {profiles.length > 0 &&
             <Box sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                 <IconButton color="primary" aria-label="arrow left" size="small"
                             sx={{display: currentIndex === 0 ? "none" : ""}} onClick={() => {
                     setCurrentIndex(prevState => prevState - 1)
                 }}>
+                    {/*<img src={img.src}/>*/}
                     <img src={"drawable/arrow_left.svg"}/>
                 </IconButton>
                 <Card sx={{
@@ -64,7 +86,7 @@ export function HomePageLogged() {
                     <CardMedia
                         component="img"
                         height="500"
-                        image={userData.picture}
+                        image={picture}
                         alt="user picture"
                         sx={{objectPosition: "top"}}
                     />
@@ -74,22 +96,20 @@ export function HomePageLogged() {
                         alignItems: "center",
                         minWidth: "min-content"
                     }}>
-                        <IconButton color="primary" aria-label="cancel" sx={{margin: "3rem"}} onClick={handleReject}>
-                            <img src={"drawable/cancel.svg"} width="100px" style={{margin: "1rem"}}/>
-                        </IconButton>
+
                         <Box sx={{display: "flex", flexDirection: "column", textAlign: "center", margin: "1rem"}}>
                             <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center", margin: "1rem"}}>
                                 <Typography variant={"h4"} sx={{
                                     borderRight: "3px solid black",
                                     padding: "0.5rem"
-                                }}>{userData.name}, {userData.age}</Typography>
+                                }}>{userInfo.firstName}, {calculateAge(userInfo.dateOfBirth)}</Typography>
                                 <Typography variant="h4" sx={{padding: "0.5rem"}}>Zgranie</Typography>
                                 <Typography variant="h4" sx={{
                                     padding: "0.5rem",
                                     color: "var(--md-sys-color-surface-tint-light)"
-                                }}>{userData.match}%</Typography>
+                                }}>{match}%</Typography>
                             </Box>
-                            <Typography variant="h5" sx={{padding: "0.5rem"}}>{userData.description}</Typography>
+                            <Typography variant="h5" sx={{padding: "0.5rem"}}>{description}</Typography>
                         </Box>
                         <IconButton color="primary" aria-label="message" sx={{margin: "3rem"}}
                                     onClick={() => navigate("/chat")}>
@@ -99,12 +119,12 @@ export function HomePageLogged() {
                 </Card>
                 <IconButton color="primary" aria-label="arrow right" size="small" onClick={() => {
                     setCurrentIndex(prevState => prevState + 1)
-                }} sx={{display: currentIndex === users.length - 1 ? "none" : ""}}>
+                }} sx={{display: currentIndex === profiles.length - 1 ? "none" : ""}}>
                     <img src={"drawable/arrow_right.svg"}/>
                 </IconButton>
             </Box>
         }
-        {users.length === 0 && <Box sx={{
+        {profiles.length === 0 && <Box sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

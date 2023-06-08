@@ -15,6 +15,7 @@ export let RegisterRequest = (setIsLoading, setSuccess, setError, email, name, s
                     firstName: name,
                     secondName: surname,
                     gender: gender,
+                    sexuality: sexuality,
                     dateOfBirth: dateOfBirth,
                     password: password,
                 }
