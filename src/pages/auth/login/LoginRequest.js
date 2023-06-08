@@ -21,7 +21,7 @@ export let LoginRequest = (setIsLoading, login, setError, email, password) => {
             setIsLoading(false)
             if (response.status === 200) {
                 response.json().then(json => {
-                    login(json.token)
+                    login(json.token, json.answeredToForm)
                 })
             } else {
                 try {

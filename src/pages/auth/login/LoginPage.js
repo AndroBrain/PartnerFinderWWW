@@ -1,9 +1,10 @@
 import "./../../../styles/styles.css"
 import {appName} from "../../../App";
 import {TextField} from "../../../components/TextField";
+import {Navigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import {ButtonPrimary} from "../../../components/ButtonPrimary";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {LoginRequest} from "./LoginRequest";
 import {authContext} from "../auth";
 
@@ -13,11 +14,11 @@ export function LoginPage() {
     const [password, setPassword] = useState("")
     const [error, setError] = useState(null)
     const {login} = useContext(authContext)
-    const navigate = useNavigate()
+    const [survey, setSurvey] = useState(null)
 
-    const setAsLoggedIn = (jwt) => {
+    const setAsLoggedIn = (jwt, survey) => {
         login(jwt)
-        navigate("/")
+        setSurvey(survey)
     }
 
     const cmdLogin = (e) => {
@@ -33,6 +34,8 @@ export function LoginPage() {
     }
 
     return <div className="auth-page">
+        {survey === false && <Navigate to="/survey" />}
+        {survey && <Navigate to="/" />}
         <form className="auth-card flex-column" onSubmit={cmdLogin}>
             <img className="auth-image" src={'drawable/logo.svg'} alt={appName}/>
             <span className="auth-app-name headline-small">{appName}</span>
