@@ -26,7 +26,8 @@ export let GetProfilePictureRequest = (jwt, setPicture, setError) => {
             } else {
                 try {
                     response.json().then(json => {
-                        if (json !== "No photo files found.") {
+                        console.log(json)
+                        if (json !== "No photo files found." && json !== "User folder does not exist.") {
                             setError(json)
                         }
                     })
