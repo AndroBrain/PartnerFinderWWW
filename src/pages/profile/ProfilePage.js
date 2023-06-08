@@ -4,6 +4,8 @@ import {IconField} from "../../components/IconField";
 import {Toolbar} from "../../components/Toolbar";
 import {useContext, useEffect, useRef, useState} from "react";
 import {GetProfileInfoRequest} from "./GetProfileInfoRequest";
+import {GetProfilePictureRequest} from "./GetProfilePictureRequest";
+import {decodeBase64Image} from "./GetProfilePictureRequest";
 import {authContext} from "../auth/auth";
 import {GetProfileDescriptionRequest} from "./GetProfileDescripctionRequest";
 import {ButtonPrimary} from "../../components/ButtonPrimary";
@@ -28,7 +30,7 @@ export function ProfilePage() {
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             SetProfileImageRequest(authState.jwt, event.target.files[0], () => {
-                setImage(URL.createObjectURL(event.target.files[0]));
+                setImage({src: URL.createObjectURL(event.target.files[0])});
             }, setError)
         }
     }
@@ -59,6 +61,7 @@ export function ProfilePage() {
     useEffect(() => {
         GetProfileInfoRequest(authState.jwt, setProfile, setError)
         GetProfileDescriptionRequest(authState.jwt, cmdSetDescription, setError)
+        GetProfilePictureRequest(authState.jwt, setImage, setError)
     }, [])
 
     return <Box sx={{display: "flex", height: "100%", width: "100%", flexDirection: "column"}}>
@@ -99,7 +102,7 @@ export function ProfilePage() {
                     <CardMedia
                         component="img"
                         height="500"
-                        image={image}
+                        image={image.src}
                         sx={{objectPosition: "top", cursor: "pointer"}}
                         onClick={(e) => inputFile.current.click()}
                     />
