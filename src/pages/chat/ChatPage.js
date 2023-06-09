@@ -55,7 +55,8 @@ export function ChatPage() {
             .start()
             .then(() => {
                 console.log('Połączono z hubem.');
-                setConnection(hubConnection);
+                setConnection(hubConnection)
+
             })
             .catch((error) => {
                 console.error('Błąd podczas łączenia z hubem:', error);
@@ -68,8 +69,15 @@ export function ChatPage() {
         };
     }, []);
 
+    useEffect(() => {
+        const email = localStorage.getItem('email')
+        if (email !== null) {
+            sendMessage('', email);
+        }
+    }, [connection])
+
     const sendMessage = (message, receiver) => {
-        if (connection) {
+        if(connection) {
             connection.invoke('SendMessage', receiver, message);
             setChat([
                 ...chat,
@@ -93,7 +101,7 @@ export function ChatPage() {
             }
         };
         fetchData();
-    }, [])
+    }, [connection])
 
     useEffect(() => {
         if (conversationPartnersId.length > 0) {
@@ -128,7 +136,7 @@ export function ChatPage() {
                         />
                         <Box sx={{margin: "1rem", minWidth: "95%", minHeight: "min-content"}}>
                             <ChatMessages messages={chat} currentUserEmail={currentUserEmail}/>
-                            <ChatTextField  messageRef={messageRef} handleSubmit={handleSubmit}/>
+                            <ChatTextField messageRef={messageRef} handleSubmit={handleSubmit}/>
                         </Box>
                     </Box>
                 </Box>}

@@ -7,8 +7,8 @@ import {authContext} from "../../auth/auth";
 import {
     GetCurrentUserId,
     GetProfileSuggestionsIds,
-    GetUserDescription,
-    GetUserInfo
+    GetUserDescription, GetUserEmail,
+    GetUserInfo,
 } from "./ProfileSuggestionRequests";
 import {decodeBase64Image, GetPictureForUserId} from "./PictureRequests";
 
@@ -40,6 +40,19 @@ export function HomePageLogged() {
         dateOfBirth: "",
     });
 
+    const SendEmptyMessage = (jwt, id) => {
+        const fetchData = async () => {
+            try {
+
+                const email = await GetUserEmail(jwt, id);
+                localStorage.setItem('email', email);
+            } catch (error) {
+                console.log(error.toString());
+            }
+        };
+        fetchData();
+    };
+
     useEffect( () => {
         const fetchData = async () => {
             try {
@@ -54,7 +67,6 @@ export function HomePageLogged() {
 
     useEffect(() => {
         if (profiles && profiles.length > 0) {
-
             setMatch( Math.round(profiles[currentIndex].score * 100));
             GetUserDescription(authState.jwt, setDescription, setError, profiles[currentIndex].target_user_id)
             GetPictureForUserId(authState.jwt, setPicture, setError, profiles[currentIndex].target_user_id)
@@ -65,7 +77,9 @@ export function HomePageLogged() {
 
     return <Box sx={{display: "flex", height: "100%", width: "100%", flexDirection: "column"}}>
         <Toolbar>
-            <IconField text={"Wiadomości"} icon={"drawable/send_message.svg"} onClick={() => navigate("/chat")}/>
+            <IconField text={"Wiadomości"} icon={"drawable/send_message.svg"} onClick={() => {
+                navigate("/chat")
+            }}/>
             <IconField text={"Mój profil"} icon={"drawable/profile.svg"} onClick={() => navigate("/profile")}/>
         </Toolbar>
         {profiles.length > 0 &&
@@ -112,7 +126,10 @@ export function HomePageLogged() {
                             <Typography variant="h5" sx={{padding: "0.5rem"}}>{description}</Typography>
                         </Box>
                         <IconButton color="primary" aria-label="message" sx={{margin: "3rem"}}
-                                    onClick={() => navigate("/chat")}>
+                                    onClick={() => {
+                                        SendEmptyMessage(authState.jwt, profiles[currentIndex].target_user_id);
+                                        navigate("/chat")
+                                    }}>
                             <img src={"drawable/message.svg"} width="120px" style={{margin: "1rem"}}/>
                         </IconButton>
                     </Box>

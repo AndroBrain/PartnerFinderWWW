@@ -1,4 +1,5 @@
 import {apiUrl} from "../../../App";
+import {useEffect} from "react";
 
 export let GetProfileSuggestionsIds = (jwt, setUsers, setError, id) => {
     fetch(`http://localhost:5000/matches?user_id=${id}&num_matches=10`,
@@ -117,3 +118,32 @@ export let GetCurrentUserId = (jwt) => {
             });
     });
 };
+
+export let GetUserEmail = (jwt, id) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${apiUrl}/user/email?id=${id}`, {
+            mode: "cors",
+            method: "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
+            },
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to get current user ID');
+                }
+            })
+            .then(json => {
+                resolve(json);
+            })
+            .catch(error => {
+                reject(error.toString());
+            });
+    });
+};
+
+

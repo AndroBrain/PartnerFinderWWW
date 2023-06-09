@@ -21,7 +21,7 @@ const ChatMessages = (props) => {
             ref={containerRef}
         >
             {messages.map((message) =>
-                message !== "" ? (
+                message.message !== '' ? (
                     <Box sx={{ width: "100%" }} key={message.id}>
                         <Card
                             sx={{
