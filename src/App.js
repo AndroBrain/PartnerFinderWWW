@@ -47,5 +47,5 @@ function App() {
 }
 
 export default App;
-export const appName = "Burza Mózgów"
+export const appName = "Namiętny nawigator"
 export const apiUrl = "http://localhost:8081/api"

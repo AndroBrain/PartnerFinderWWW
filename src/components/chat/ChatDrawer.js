@@ -22,7 +22,7 @@ const ChatDrawer = (props) => {
                         }}>
                             <ListItemAvatar>
                                 <Avatar
-                                    src={chat.picture}
+                                    src={chat.picture.src}
                                     sx={{width: 50, height: 50}}
                                 />
                             </ListItemAvatar>

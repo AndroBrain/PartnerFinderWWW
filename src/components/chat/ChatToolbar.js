@@ -4,7 +4,9 @@ import Rating from '@mui/material/Rating';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { styled } from '@mui/material/styles';
-
+import {useContext, useState} from "react";
+import {SetRating} from "../../pages/chat/RatingRequest";
+import {authContext} from "../../pages/auth/auth";
 const ChatToolbar = (props) => {
     const StyledRating = styled(Rating)({
         '& .MuiRating-iconFilled': {
@@ -14,8 +16,14 @@ const ChatToolbar = (props) => {
             color: "var(--md-ref-palette-primary60)",
         },
     });
-
-    const {currentChat} = props;
+    const {id, userInfo} = props;
+    const [rating, setRating] = useState(0);
+    const {authState} = useContext(authContext)
+    const handleRating = (event, newValue) => {
+        setRating(newValue);
+        SetRating(authState.jwt, id, newValue);
+    }
+    // alert(picture.src)
     return (<Box sx={{
         width: "100%",
         backgroundColor: "var(--md-sys-color-primary-container-light)",
@@ -25,19 +33,20 @@ const ChatToolbar = (props) => {
         alignItems: "center"
     }}>
         <Avatar
-            src={currentChat.picture}
+            src={userInfo?.picture ? userInfo.picture.src : ''}
             sx={{width: 80, height: 80, marginLeft: "1rem"}}
         />
         <Typography variant="h5" sx={{marginLeft: "2rem"}}>
-            {currentChat.name}
+            {userInfo?.name ? userInfo.name : ''}
         </Typography>
         <StyledRating
             name="customized-color"
-            defaultValue={0}
+            value={rating}
+            onChange={handleRating}
             getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
             icon={<FavoriteIcon fontSize="inherit" />}
             emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-            sx={{marginLeft:"20rem"}}
+            sx={{marginLeft:"2rem"}}
         />
     </Box>)
 }
