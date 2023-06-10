@@ -1,10 +1,6 @@
-version: '3'
+version: "3"
 services:
-  react-app:
-    build:
-      context: .
-      dockerfile: Dockerfile.txt
+  app:
+    build: .
     ports:
-      - '3000:3000'
-    volumes:
-      - './:/app'
+      - "3001:3000"
