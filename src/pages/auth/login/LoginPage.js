@@ -1,12 +1,11 @@
 import "./../../../styles/styles.css"
 import {appName} from "../../../App";
 import {TextField} from "../../../components/TextField";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import {ButtonPrimary} from "../../../components/ButtonPrimary";
-import {Link} from "react-router-dom";
 import {LoginRequest} from "./LoginRequest";
-import {authContext} from "../auth";
+import {authContext, validateEmail} from "../auth";
 
 export function LoginPage() {
     const [loading, setLoading] = useState(false)
@@ -24,18 +23,25 @@ export function LoginPage() {
     const cmdLogin = (e) => {
         e.preventDefault()
         setError(null)
+        let fieldErrors = ""
         if (email.trim().length <= 0) {
-            setError("Wypełnij pole email.")
-        } else if (password.trim().length <= 0) {
-            setError("Wypełnij pole hasło.")
-        } else {
-            LoginRequest(setLoading, setAsLoggedIn, setError, email, password)
+            fieldErrors += "Wypełnij pole email.\n"
+        } else if (validateEmail(email)) {
+            fieldErrors += "Podaj prawidłowy email.\n"
         }
+        if (password.trim().length <= 0) {
+            fieldErrors += "Wypełnij pole hasło.\n"
+        }
+        if (fieldErrors === "") {
+            LoginRequest(setLoading, setAsLoggedIn, setError, email, password)
+            return
+        }
+        setError(fieldErrors)
     }
 
     return <div className="auth-page">
-        {survey === false && <Navigate to="/survey" />}
-        {survey && <Navigate to="/" />}
+        {survey === false && <Navigate to="/survey"/>}
+        {survey && <Navigate to="/"/>}
         <form className="auth-card flex-column" onSubmit={cmdLogin}>
             <img className="auth-image" src={'drawable/logo.svg'} alt={appName}/>
             <span className="auth-app-name headline-small">{appName}</span>
