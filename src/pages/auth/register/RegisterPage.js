@@ -8,6 +8,7 @@ import pl from 'date-fns/locale/pl';
 import "react-datepicker/dist/react-datepicker.css";
 import {RegisterRequest} from "./RegisterRequest";
 import {Navigate} from "react-router-dom";
+import {validateEmail} from "../auth";
 
 export function RegisterPage() {
     let [loading, setLoading] = useState(false)
@@ -34,11 +35,30 @@ export function RegisterPage() {
 
     const cmdRegister = (e) => {
         e.preventDefault()
-        if (password !== repeatPassword) {
-            setError("Błąd. Hasła muszą być identyczne!")
-        } else {
-            RegisterRequest(setLoading, setSuccess, setError, email, name, surname, gender, sexuality, dateOfBirth, password)
+        setError(null)
+        let fieldErrors = ""
+        if (email.trim().length <= 0) {
+            fieldErrors += "Wypełnij pole email.\n"
+        } else if (validateEmail(email)) {
+            fieldErrors += "Podaj prawidłowy email.\n"
         }
+        if (name.trim().length <= 0) {
+            fieldErrors += "Wypełnij pole imie.\n"
+        }
+        if (surname.trim().length <= 0) {
+            fieldErrors += "Wypełnij pole nazwisko.\n"
+        }
+        if (password.length <= 0) {
+            fieldErrors += "Wypełnij pole hasło.\n"
+        }
+        if (password !== repeatPassword) {
+            fieldErrors += "Hasła muszą być identyczne.\n"
+        }
+        if (fieldErrors === "") {
+            RegisterRequest(setLoading, setSuccess, setError, email, name, surname, gender, sexuality, dateOfBirth, password)
+            return
+        }
+        setError(fieldErrors)
     }
 
     return <div className="auth-page">

@@ -108,6 +108,8 @@
 .auth-error-span {
     margin-top: 8px;
     white-space: pre-line;
+    text-align: center;
+    line-height: 20px;
 }
 
 .toolbar {
