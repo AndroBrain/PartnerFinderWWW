@@ -41,14 +41,13 @@ export function ChatPage() {
 
         hubConnection.on('ReceiveMessage', (receiver, sender, message) => {
             console.log(`Wiadomość od ${sender} do ${receiver}: ${message}`);
-            setChat([
-                ...chat,
-                {
-                    "senderEmail": sender,
-                    "receiverEmail": receiver,
-                    "message": message,
-                }
-            ]);
+            const chatCopy = [...chat];
+            chatCopy.push({
+                "senderEmail": sender,
+                "receiverEmail": receiver,
+                "message": message,
+            })
+            setChat([...chatCopy]);
         });
 
         hubConnection
@@ -56,6 +55,7 @@ export function ChatPage() {
             .then(() => {
                 console.log('Połączono z hubem.');
                 setConnection(hubConnection)
+
 
             })
             .catch((error) => {
@@ -79,14 +79,22 @@ export function ChatPage() {
     const sendMessage = (message, receiver) => {
         if(connection) {
             connection.invoke('SendMessage', receiver, message);
-            setChat([
-                ...chat,
-                {
-                    "senderEmail": currentUserEmail,
-                    "receiverEmail": receiver,
-                    "message": message,
-                }
-            ]);
+
+            const chatCopy = [...chat];
+            chatCopy.push({
+                "senderEmail": currentUserEmail,
+                "receiverEmail": receiver,
+                "message": message,
+            })
+            setChat([...chatCopy]);
+            // window.location.reload(false);
+
+            if(localStorage.getItem('email') !== null) {
+                localStorage.removeItem('email')
+                window.location.reload(false);
+            }
+
+
         }
     };
 
@@ -104,6 +112,7 @@ export function ChatPage() {
     }, [connection])
 
     useEffect(() => {
+
         if (conversationPartnersId.length > 0) {
             GetConversation(authState.jwt, setChat, setError, conversationPartnersId.at(currentChatIndex))
         }
@@ -116,7 +125,9 @@ export function ChatPage() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const messageText = messageRef.current.value;
-        sendMessage(messageText, chat.at(0).receiverEmail);
+        const receiver = chat.at(0).receiverEmail === currentUserEmail ? chat.at(0).senderEmail : chat.at(0).receiverEmail;
+        sendMessage(messageText, receiver);
+        messageRef.current.value = '';
     }
 
     return (

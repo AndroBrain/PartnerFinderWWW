@@ -1,5 +1,6 @@
 import {Box, List, ListItem, ListItemAvatar, ListItemButton, ListItemText} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import {v4 as uuidv4} from "uuid";
 
 const ChatDrawer = (props) => {
     const {currentChatIndex, setcurrentChatIndex, chat} = props;
@@ -13,7 +14,8 @@ const ChatDrawer = (props) => {
         }}>
             <List sx={{padding: "0", height:"100%"}}>
                 {chat.map(chat => (
-                    <ListItemButton onClick={() => {
+                    <ListItemButton key={chat.id}
+                        onClick={() => {
                         setcurrentChatIndex(chat.id)
                     }} sx={{width: "100%", padding: "0"}}>
                         <ListItem sx={{

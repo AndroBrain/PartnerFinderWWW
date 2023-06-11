@@ -54,12 +54,12 @@ const opinions = [
 const profiles = [
     {
         name: "Marian",
-        imageSrc: "drawable/marian.png",
+        imageSrc: "drawable/marian.jpg",
         bio: "Marian z Poznania to szalony romantyk, który uwielbia spontaniczne wypady, sporty ekstremalne i podróże. Zafascynowany muzyką i sztuką, szuka kogoś do dzielenia życia i przygód."
     },
     {
         name: "Weronika",
-        imageSrc: "drawable/weronika.png",
-        bio: "Marian z Poznania to szalony romantyk, który uwielbia spontaniczne wypady, sporty ekstremalne i podróże. Zafascynowany muzyką i sztuką, szuka kogoś do dzielenia życia i przygód."
+        imageSrc: "drawable/weronika.jpg",
+        bio: "Weronika to urocza, inteligentna i pełna energii kobieta o nieodpartym uśmiechu. Jej wdzięk i naturalna elegancja przyciągają uwagę wszystkich wokół niej. Na randce z Weroniką możesz spodziewać się niezapomnianych chwil pełnych rozmów, śmiechu i pozytywnej atmosfery."
     },
 ]

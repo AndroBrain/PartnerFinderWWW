@@ -1,5 +1,6 @@
 import {Box, Card, Typography} from "@mui/material";
 import {useEffect, useRef} from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 const ChatMessages = (props) => {
     const {messages, currentUserEmail} = props;
@@ -22,7 +23,7 @@ const ChatMessages = (props) => {
         >
             {messages.map((message) =>
                 message.message !== '' ? (
-                    <Box sx={{ width: "100%" }} key={message.id}>
+                    <Box sx={{ width: "100%" }} key={uuidv4()}>
                         <Card
                             sx={{
                                 wordWrap: "break-word",
