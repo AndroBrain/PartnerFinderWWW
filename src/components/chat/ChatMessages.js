@@ -1,10 +1,11 @@
-import {Box, Card, Typography} from "@mui/material";
-import {useEffect, useRef} from "react";
+import { Box, Card, Typography } from "@mui/material";
+import { useEffect, useRef } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
 const ChatMessages = (props) => {
-    const {messages, currentUserEmail} = props;
+    const { messages, currentUserEmail } = props;
     const containerRef = useRef(null);
+
     useEffect(() => {
         containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }, [messages]);
@@ -21,12 +22,13 @@ const ChatMessages = (props) => {
             }}
             ref={containerRef}
         >
-            {messages.map((message) =>
-                message.message !== '' ? (
-                    <Box sx={{ width: "100%" }} key={uuidv4()}>
+            {messages.map((message) => (
+                message.message !== "" && (
+                    <Box key={uuidv4()} sx={{ width: "100%" }}>
                         <Card
                             sx={{
                                 wordWrap: "break-word",
+                                whiteSpace: "initial",
                                 float: message.senderEmail === currentUserEmail ? "right" : "left",
                                 backgroundColor: message.senderEmail === currentUserEmail
                                     ? "var(--md-sys-color-tertiary-container-light)"
@@ -43,12 +45,21 @@ const ChatMessages = (props) => {
                                 maxWidth: "350px",
                             }}
                         >
-                            <Typography>{message.message}</Typography>
+                            <Typography
+                                sx={{
+                                    wordWrap: "break-word",
+                                    overflowWrap: "break-word",
+                                    wordBreak: "break-all",
+                                }}
+                            >
+                                {message.message}
+                            </Typography>
                         </Card>
                     </Box>
-                ) : null
-            )}
+                )
+            ))}
         </Box>
     );
-}
+};
+
 export default ChatMessages;

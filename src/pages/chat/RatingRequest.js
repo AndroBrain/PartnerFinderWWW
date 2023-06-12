@@ -19,3 +19,35 @@ export let SetRating = (jwt, id, rating) => {
 
         });
 }
+
+export let GetRating = (jwt, setRating, id) => {
+    fetch(`${apiUrl}/rate?targetUserId=${id}`,
+        {
+            "mode": "cors",
+            "method": "GET",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
+            },
+        }
+    )
+        .then(response => {
+            if (response.status === 200) {
+                response.json().then(json => {
+                    setRating(json)
+                })
+            } else {
+                try {
+                    response.json().then(json => {
+
+                    })
+                } catch {
+
+                }
+            }
+        })
+        .catch(e => {
+
+        });
+}

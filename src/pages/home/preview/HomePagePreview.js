@@ -45,9 +45,9 @@ const opinions = [
         author: "Kaja",
         text: "To świetny portal randkowy! Korzystam z niego od kilku miesięcy i jestem bardzo zadowolona. Posiada ciekawe funkcjonalności i wysoką jakość profili użytkowników. Polecam!"
     },
-    {author: "Oskar", text: "OK"},
-    {author: "Filip", text: "OK"},
-    {author: "Hubert", text: "OK"},
+    {author: "Oskar", text: "Od zawsze miałem problem z trafieniem na osobę, która mnie w pełni rozumie. Dzięki temu portalowi randkowemu poznaję osoby o podobnym spojrzeniu na świat do mojego. Warto było założyć konto!"},
+    {author: "Filip", text: "Ten portal randkowy jest niezwykle skutecznym narzędziem, które umożliwiło mi poznanie wyjątkowej osoby, z którą teraz buduję piękną relację."},
+    {author: "Hubert", text: "Ta aplikacja randkowa to jak skok ze spadochronem - emocjonujące, pełne adrenaliny i czasem zaskakujące. Tutaj nie ma miejsca na nudę! Każde kliknięcie to potencjalna randka i szansa na poznanie kogoś wyjątkowego. Możesz trafić na osobę, która stawia awokado na pierwszym miejscu w swoim życiu albo na kogoś, kto uważa, że seriale to najważniejsza rzecz na świecie. Jedno jest pewne - ta aplikacja sprawi, że Twoje serce będzie biło jak szalone!"},
 
 ]
 

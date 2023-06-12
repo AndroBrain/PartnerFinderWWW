@@ -1,7 +1,7 @@
 import {Toolbar} from "../../components/Toolbar";
 import {IconField} from "../../components/IconField";
 import {Box, Typography} from "@mui/material";
-import {useContext, useEffect, useRef, useState} from "react";
+import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import ChatDrawer from "../../components/chat/ChatDrawer";
 import ChatToolbar from "../../components/chat/ChatToolbar";
 import ChatMessages from "../../components/chat/ChatMessages";
@@ -30,6 +30,27 @@ export function ChatPage() {
     const [currentUserEmail, setCurrentUserEmail] = useState();
     const [usersInfo, setUsersInfo] = useState([]);
 
+    const handleMessageReceived = useCallback((receiver, sender, message) => {
+        console.log(`Wiadomość od ${sender} do ${receiver}: ${message}`);
+        if(chat.length === 0) {
+            if(conversationPartnersId) {
+                GetConversationPartnersIds(authState.jwt, setConversationPartnersId, setError);
+            }
+            GetConversation(authState.jwt, setChat, setError, conversationPartnersId.at(currentChatIndex))
+        }
+        console.log(receiver, sender, chat.at(0).receiverEmail, chat.at(0).senderEmail);
+        if(sender === chat.at(0).receiverEmail || sender === chat.at(0).senderEmail) {
+            setChat(prevChat => [
+                ...prevChat,
+                {
+                    "senderEmail": sender,
+                    "receiverEmail": receiver,
+                    "message": message,
+                }
+            ]);
+        }
+    }, [chat]);
+
     useEffect(() => {
         const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl(`http://localhost:8081/hub/chat?access_token=${authState.jwt}`, {
@@ -39,32 +60,20 @@ export function ChatPage() {
             .withAutomaticReconnect()
             .build();
 
-        hubConnection.on('ReceiveMessage', (receiver, sender, message) => {
-            console.log(`Wiadomość od ${sender} do ${receiver}: ${message}`);
-            const chatCopy = [...chat];
-            chatCopy.push({
-                "senderEmail": sender,
-                "receiverEmail": receiver,
-                "message": message,
-            })
-            setChat([...chatCopy]);
-        });
+        hubConnection.on('ReceiveMessage', handleMessageReceived);
 
-        hubConnection
-            .start()
+        hubConnection.start()
             .then(() => {
                 console.log('Połączono z hubem.');
-                setConnection(hubConnection)
-
-
+                setConnection(hubConnection);
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error('Błąd podczas łączenia z hubem:', error);
             });
 
         return () => {
-            if (connection) {
-                connection.stop();
+            if (hubConnection) {
+                hubConnection.stop();
             }
         };
     }, []);
@@ -72,6 +81,7 @@ export function ChatPage() {
     useEffect(() => {
         const email = localStorage.getItem('email')
         if (email !== null) {
+            console.log("change")
             sendMessage('', email);
         }
     }, [connection])
@@ -87,18 +97,16 @@ export function ChatPage() {
                 "message": message,
             })
             setChat([...chatCopy]);
-            // window.location.reload(false);
-
             if(localStorage.getItem('email') !== null) {
                 localStorage.removeItem('email')
+                console.log("change")
                 window.location.reload(false);
             }
-
-
         }
     };
 
     useEffect(() => {
+        console.log("hababa1")
         GetConversationPartnersIds(authState.jwt, setConversationPartnersId, setError);
         const fetchData = async () => {
             try {
@@ -112,13 +120,14 @@ export function ChatPage() {
     }, [connection])
 
     useEffect(() => {
-
+        console.log("hababa2")
         if (conversationPartnersId.length > 0) {
             GetConversation(authState.jwt, setChat, setError, conversationPartnersId.at(currentChatIndex))
         }
     }, [conversationPartnersId, currentChatIndex])
 
     useEffect(() => {
+        console.log("hababa3")
         GetBasicInfoForAllUsers(authState.jwt, setUsersInfo, setError, conversationPartnersId);
     }, [conversationPartnersId])
 

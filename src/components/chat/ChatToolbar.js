@@ -4,8 +4,8 @@ import Rating from '@mui/material/Rating';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { styled } from '@mui/material/styles';
-import {useContext, useState} from "react";
-import {SetRating} from "../../pages/chat/RatingRequest";
+import {useContext, useEffect, useState} from "react";
+import {GetRating, SetRating} from "../../pages/chat/RatingRequest";
 import {authContext} from "../../pages/auth/auth";
 const ChatToolbar = (props) => {
     const StyledRating = styled(Rating)({
@@ -23,6 +23,10 @@ const ChatToolbar = (props) => {
         setRating(newValue);
         SetRating(authState.jwt, id, newValue);
     }
+
+    useEffect(() => {
+        GetRating(authState.jwt, setRating, id)
+    }, [id])
     // alert(picture.src)
     return (<Box sx={{
         width: "100%",
